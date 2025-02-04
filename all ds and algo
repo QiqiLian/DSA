@@ -1,0 +1,2464 @@
+//Data Structures
+
+
+//Array
+public class ArrayExample{
+    //Initializing an Array
+    int [] arr = new int[5]; //Array size of 5
+
+    // Assigning values
+    arr[0] = 10;
+    arr[1] = 20;
+    arr[2] = 30;
+    arr[3] = 40;
+    arr[4] = 50;
+
+    // Accessing elements
+    System.out.println("First Element: " + arr[0]); // Output: 10
+
+    // Traversing the array
+    System.out.print("Array Elements: ");
+    for (int i = 0; i < arr.length; i++) {
+        System.out.print(arr[i] + " ");
+    }
+    System.out.print("\nUsing Enhanced For-Loop: ");
+    for (int num : arr) {
+        System.out.print(num + " ");
+    }
+}
+
+
+
+
+//LinkedList
+// Class representing a Node
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+// Class representing a Singly Linked List
+class LinkedList {
+    Node head; // Head (first node) of the linked list
+
+    // Insert a new node at the end
+    public void insert(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.next = newNode;
+    }
+
+    // Delete a node by value
+    public void delete(int data) {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+        if (head.data == data) {
+            head = head.next;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null && temp.next.data != data) {
+            temp = temp.next;
+        }
+        if (temp.next == null) {
+            System.out.println("Element not found.");
+            return;
+        }
+        temp.next = temp.next.next;
+    }
+
+    // Print the linked list
+    public void display() {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("null");
+    }
+
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.insert(10);
+        list.insert(20);
+        list.insert(30);
+        list.insert(40);
+
+        System.out.println("Linked List:");
+        list.display(); // Output: 10 -> 20 -> 30 -> 40 -> null
+
+        System.out.println("Deleting 20...");
+        list.delete(20);
+        list.display(); // Output: 10 -> 30 -> 40 -> null
+    }
+}
+
+
+// Stack implementation using an array
+class Stack {
+    private int[] stack;
+    private int top;
+    private int capacity;
+
+    // Constructor to initialize the stack
+    public Stack(int size) {
+        stack = new int[size];
+        capacity = size;
+        top = -1;
+    }
+
+    // Push operation (adds element to stack)
+    public void push(int data) {
+        if (top == capacity - 1) {
+            System.out.println("Stack Overflow! Cannot push " + data);
+            return;
+        }
+        stack[++top] = data;
+        System.out.println("Pushed: " + data);
+    }
+
+    // Pop operation (removes top element from stack)
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Stack Underflow! Nothing to pop.");
+            return -1;
+        }
+        return stack[top--];
+    }
+
+    // Peek operation (returns top element without removing it)
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty!");
+            return -1;
+        }
+        return stack[top];
+    }
+
+    // Check if the stack is empty
+    public boolean isEmpty() {
+        return top == -1;
+    }
+
+    // Display stack elements
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty!");
+            return;
+        }
+        System.out.print("Stack: ");
+        for (int i = top; i >= 0; i--) {
+            System.out.print(stack[i] + " ");
+        }
+        System.out.println();
+    }
+
+    // Main method to test stack operations
+    public static void main(String[] args) {
+        Stack stack = new Stack(5);
+
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+        stack.display(); // Output: Stack: 30 20 10
+
+        System.out.println("Top Element: " + stack.peek()); // Output: 30
+
+        System.out.println("Popped: " + stack.pop()); // Output: 30
+        stack.display(); // Output: Stack: 20 10
+    }
+}
+
+
+// Queue implementation using an array (First in, First out)
+class Queue {
+    private int[] queue;
+    private int front, rear, capacity, size;
+
+    // Constructor to initialize the queue
+    public Queue(int capacity) {
+        this.capacity = capacity;
+        queue = new int[capacity];
+        front = 0;
+        rear = -1;
+        size = 0;
+    }
+
+    // Enqueue operation (adds element to the rear)
+    public void enqueue(int data) {
+        if (size == capacity) {
+            System.out.println("Queue Overflow! Cannot enqueue " + data);
+            return;
+        }
+        rear = (rear + 1) % capacity; // Circular increment
+        queue[rear] = data;
+        size++;
+        System.out.println("Enqueued: " + data);
+    }
+
+    // Dequeue operation (removes element from the front)
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue Underflow! Nothing to dequeue.");
+            return -1;
+        }
+        int removed = queue[front];
+        front = (front + 1) % capacity; // Circular increment
+        size--;
+        return removed;
+    }
+
+    // Peek operation (returns front element without removing it)
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty!");
+            return -1;
+        }
+        return queue[front];
+    }
+
+    // Check if the queue is empty
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    // Display queue elements
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty!");
+            return;
+        }
+        System.out.print("Queue: ");
+        for (int i = 0; i < size; i++) {
+            System.out.print(queue[(front + i) % capacity] + " ");
+        }
+        System.out.println();
+    }
+
+    // Main method to test queue operations
+    public static void main(String[] args) {
+        Queue queue = new Queue(5);
+
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+        queue.display(); // Output: Queue: 10 20 30
+
+        System.out.println("Front Element: " + queue.peek()); // Output: 10
+
+        System.out.println("Dequeued: " + queue.dequeue()); // Output: 10
+        queue.display(); // Output: Queue: 20 30
+    }
+}
+
+//Hash Table
+
+
+import java.util.LinkedList;
+
+// Class representing a Hash Table
+class HashTable {
+    private int size;
+    private LinkedList<Entry>[] table; // Array of linked lists for chaining
+
+    // Constructor to initialize the hash table
+    public HashTable(int size) {
+        this.size = size;
+        table = new LinkedList[size];
+
+        // Initialize each bucket as an empty linked list
+        for (int i = 0; i < size; i++) {
+            table[i] = new LinkedList<>();
+        }
+    }
+
+    // Hash function to compute index
+    private int hashFunction(int key) {
+        return key % size;
+    }
+
+    // Insert key-value pair into the hash table
+    public void insert(int key, String value) {
+        int index = hashFunction(key);
+        for (Entry entry : table[index]) {
+            if (entry.key == key) {
+                entry.value = value; // Update value if key already exists
+                return;
+            }
+        }
+        table[index].add(new Entry(key, value));
+        System.out.println("Inserted (" + key + ", " + value + ")");
+    }
+
+    // Search for a value by key
+    public String search(int key) {
+        int index = hashFunction(key);
+        for (Entry entry : table[index]) {
+            if (entry.key == key) {
+                return entry.value;
+            }
+        }
+        return "Key not found";
+    }
+
+    // Delete a key-value pair from the hash table
+    public void delete(int key) {
+        int index = hashFunction(key);
+        for (Entry entry : table[index]) {
+            if (entry.key == key) {
+                table[index].remove(entry);
+                System.out.println("Deleted key: " + key);
+                return;
+            }
+        }
+        System.out.println("Key not found");
+    }
+
+    // Display the hash table
+    public void display() {
+        for (int i = 0; i < size; i++) {
+            System.out.print("Bucket " + i + ": ");
+            for (Entry entry : table[i]) {
+                System.out.print("[" + entry.key + " -> " + entry.value + "] ");
+            }
+            System.out.println();
+        }
+    }
+
+    // Inner class representing key-value pairs
+    static class Entry {
+        int key;
+        String value;
+
+        public Entry(int key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    // Main method to test hash table operations
+    public static void main(String[] args) {
+        HashTable hashTable = new HashTable(10);
+
+        hashTable.insert(1, "Apple");
+        hashTable.insert(2, "Banana");
+        hashTable.insert(11, "Grapes"); // Collision with key 1 (chaining handles it)
+
+        hashTable.display();
+
+        System.out.println("Search Key 2: " + hashTable.search(2)); // Output: Banana
+
+        hashTable.delete(1);
+        hashTable.display();
+    }
+}
+
+
+// Class representing a Hash Table using Linear Probing
+class HashTable {
+    private int size;
+    private Entry[] table; // Array to store key-value pairs
+    private static final int EMPTY = -1; // Marker for empty slots
+
+    // Constructor to initialize the hash table
+    public HashTable(int size) {
+        this.size = size;
+        table = new Entry[size];
+
+        // Initialize all slots as empty
+        for (int i = 0; i < size; i++) {
+            table[i] = new Entry(EMPTY, null);
+        }
+    }
+
+    // Hash function to compute index
+    private int hashFunction(int key) {
+        return key % size;
+    }
+
+    // Insert key-value pair using Linear Probing
+    public void insert(int key, String value) {
+        int index = hashFunction(key);
+        int startIndex = index;
+
+        // Find an available slot
+        while (table[index].key != EMPTY && table[index].key != key) {
+            index = (index + 1) % size; // Linear Probing
+            if (index == startIndex) {
+                System.out.println("Hash table is full!");
+                return;
+            }
+        }
+        table[index] = new Entry(key, value);
+        System.out.println("Inserted (" + key + ", " + value + ")");
+    }
+
+    // Search for a value by key
+    public String search(int key) {
+        int index = hashFunction(key);
+        int startIndex = index;
+
+        while (table[index].key != EMPTY) {
+            if (table[index].key == key) {
+                return table[index].value;
+            }
+            index = (index + 1) % size; // Linear Probing
+            if (index == startIndex) {
+                break;
+            }
+        }
+        return "Key not found";
+    }
+
+    // Delete a key-value pair using Lazy Deletion (marking as EMPTY)
+    public void delete(int key) {
+        int index = hashFunction(key);
+        int startIndex = index;
+
+        while (table[index].key != EMPTY) {
+            if (table[index].key == key) {
+                table[index] = new Entry(EMPTY, null); // Mark as deleted
+                System.out.println("Deleted key: " + key);
+                return;
+            }
+            index = (index + 1) % size; // Linear Probing
+            if (index == startIndex) {
+                break;
+            }
+        }
+        System.out.println("Key not found");
+    }
+
+    // Display the hash table
+    public void display() {
+        System.out.println("Hash Table:");
+        for (int i = 0; i < size; i++) {
+            if (table[i].key == EMPTY) {
+                System.out.println("Bucket " + i + ": [Empty]");
+            } else {
+                System.out.println("Bucket " + i + ": [" + table[i].key + " -> " + table[i].value + "]");
+            }
+        }
+    }
+
+    // Inner class representing key-value pairs
+    static class Entry {
+        int key;
+        String value;
+
+        public Entry(int key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    // Main method to test hash table operations
+    public static void main(String[] args) {
+        HashTable hashTable = new HashTable(10);
+
+        hashTable.insert(1, "Apple");
+        hashTable.insert(2, "Banana");
+        hashTable.insert(11, "Grapes"); // Collision with key 1 (resolved using linear probing)
+
+        hashTable.display();
+
+        System.out.println("Search Key 2: " + hashTable.search(2)); // Output: Banana
+
+        hashTable.delete(1);
+        hashTable.display();
+    }
+}
+
+
+// Class representing a Node in the BST
+class Node {
+    int key;
+    Node left, right;
+
+    public Node(int key) {
+        this.key = key;
+        left = right = null;
+    }
+}
+
+// Class representing a Binary Search Tree
+class BST {
+    Node root;
+
+    // Constructor
+    public BST() {
+        root = null;
+    }
+
+    // Insert a new key into the BST
+    public void insert(int key) {
+        root = insertRec(root, key);
+    }
+
+    private Node insertRec(Node root, int key) {
+        if (root == null) {
+            return new Node(key);
+        }
+        if (key < root.key) {
+            root.left = insertRec(root.left, key);
+        } else if (key > root.key) {
+            root.right = insertRec(root.right, key);
+        }
+        return root;
+    }
+
+    // Search for a key in the BST
+    public boolean search(int key) {
+        return searchRec(root, key);
+    }
+
+    private boolean searchRec(Node root, int key) {
+        if (root == null) {
+            return false;
+        }
+        if (root.key == key) {
+            return true;
+        }
+        return key < root.key ? searchRec(root.left, key) : searchRec(root.right, key);
+    }
+
+    // Delete a node from the BST
+    public void delete(int key) {
+        root = deleteRec(root, key);
+    }
+
+    private Node deleteRec(Node root, int key) {
+        if (root == null) {
+            return null;
+        }
+
+        if (key < root.key) {
+            root.left = deleteRec(root.left, key);
+        } else if (key > root.key) {
+            root.right = deleteRec(root.right, key);
+        } else {
+            // Node with only one child or no child
+            if (root.left == null) return root.right;
+            if (root.right == null) return root.left;
+
+            // Node with two children: Get inorder successor (smallest in right subtree)
+            root.key = minValue(root.right);
+
+            // Delete the inorder successor
+            root.right = deleteRec(root.right, root.key);
+        }
+        return root;
+    }
+
+    private int minValue(Node root) {
+        int min = root.key;
+        while (root.left != null) {
+            min = root.left.key;
+            root = root.left;
+        }
+        return min;
+    }
+
+    // Inorder Traversal (Left -> Root -> Right)
+    public void inorder() {
+        inorderRec(root);
+        System.out.println();
+    }
+
+    private void inorderRec(Node root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.key + " ");
+            inorderRec(root.right);
+        }
+    }
+
+    // Main method to test BST operations
+    public static void main(String[] args) {
+        BST tree = new BST();
+
+        // Insert nodes
+        tree.insert(50);
+        tree.insert(30);
+        tree.insert(70);
+        tree.insert(20);
+        tree.insert(40);
+        tree.insert(60);
+        tree.insert(80);
+
+        System.out.println("Inorder Traversal of BST:");
+        tree.inorder(); // Output: 20 30 40 50 60 70 80
+
+        // Search for a key
+        System.out.println("Search 40: " + tree.search(40)); // Output: true
+        System.out.println("Search 90: " + tree.search(90)); // Output: false
+
+        // Delete a node
+        System.out.println("Deleting 50...");
+        tree.delete(50);
+        tree.inorder(); // Output: 20 30 40 60 70 80
+    }
+}
+// Class representing a Node in the Binary Tree
+class Node {
+    int key;
+    Node left, right;
+
+    public Node(int key) {
+        this.key = key;
+        left = right = null;
+    }
+}
+
+// Class representing a Binary Tree
+class BinaryTree {
+    Node root;
+
+    // Constructor
+    public BinaryTree() {
+        root = null;
+    }
+
+    // Preorder Traversal (Root -> Left -> Right)
+    public void preorder(Node node) {
+        if (node == null) return;
+        System.out.print(node.key + " ");
+        preorder(node.left);
+        preorder(node.right);
+    }
+
+    // Inorder Traversal (Left -> Root -> Right)
+    public void inorder(Node node) {
+        if (node == null) return;
+        inorder(node.left);
+        System.out.print(node.key + " ");
+        inorder(node.right);
+    }
+
+    // Postorder Traversal (Left -> Right -> Root)
+    public void postorder(Node node) {
+        if (node == null) return;
+        postorder(node.left);
+        postorder(node.right);
+        System.out.print(node.key + " ");
+    }
+
+    // Main method to test Binary Tree operations
+    public static void main(String[] args) {
+        BinaryTree tree = new BinaryTree();
+
+        // Manually creating a Binary Tree
+        tree.root = new Node(1);
+        tree.root.left = new Node(2);
+        tree.root.right = new Node(3);
+        tree.root.left.left = new Node(4);
+        tree.root.left.right = new Node(5);
+        tree.root.right.left = new Node(6);
+        tree.root.right.right = new Node(7);
+
+        System.out.println("Preorder Traversal:");
+        tree.preorder(tree.root); // Output: 1 2 4 5 3 6 7
+
+        System.out.println("\nInorder Traversal:");
+        tree.inorder(tree.root); // Output: 4 2 5 1 6 3 7
+
+        System.out.println("\nPostorder Traversal:");
+        tree.postorder(tree.root); // Output: 4 5 2 6 7 3 1
+    }
+}
+
+
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+// Class representing a Node in the Complete Binary Tree
+class Node {
+    int key;
+    Node left, right;
+
+    public Node(int key) {
+        this.key = key;
+        left = right = null;
+    }
+}
+
+// Class representing a Complete Binary Tree
+class CompleteBinaryTree {
+    Node root;
+
+    // Constructor
+    public CompleteBinaryTree() {
+        root = null;
+    }
+
+    // Insert a new node ensuring Complete Binary Tree property (Level Order Insertion)
+    public void insert(int key) {
+        Node newNode = new Node(key);
+        if (root == null) {
+            root = newNode;
+            return;
+        }
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node temp = queue.poll();
+
+            // Insert left child
+            if (temp.left == null) {
+                temp.left = newNode;
+                return;
+            } else {
+                queue.add(temp.left);
+            }
+
+            // Insert right child
+            if (temp.right == null) {
+                temp.right = newNode;
+                return;
+            } else {
+                queue.add(temp.right);
+            }
+        }
+    }
+
+    // Level Order Traversal (BFS)
+    public void levelOrder() {
+        if (root == null) {
+            return;
+        }
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node temp = queue.poll();
+            System.out.print(temp.key + " ");
+
+            if (temp.left != null) {
+                queue.add(temp.left);
+            }
+            if (temp.right != null) {
+                queue.add(temp.right);
+            }
+        }
+        System.out.println();
+    }
+
+    // Inorder Traversal (Left -> Root -> Right)
+    public void inorder() {
+        inorderRec(root);
+        System.out.println();
+    }
+
+    private void inorderRec(Node root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.key + " ");
+            inorderRec(root.right);
+        }
+    }
+
+    // Main method to test Complete Binary Tree operations
+    public static void main(String[] args) {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+
+        // Insert nodes to ensure the tree remains complete
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+        tree.insert(4);
+        tree.insert(5);
+        tree.insert(6);
+        tree.insert(7);
+
+        System.out.println("Level Order Traversal of Complete Binary Tree:");
+        tree.levelOrder(); // Output: 1 2 3 4 5 6 7
+
+        System.out.println("Inorder Traversal:");
+        tree.inorder(); // Output: 4 2 5 1 6 3 7
+    }
+}
+
+
+
+// Class representing a Node in the AVL Tree
+class Node {
+    int key, height;
+    Node left, right;
+
+    public Node(int key) {
+        this.key = key;
+        this.height = 1; // Height of a new node is always 1
+        left = right = null;
+    }
+}
+
+// Class representing an AVL Tree (Balanced Binary Tree)
+class AVLTree {
+    Node root;
+
+    // Get the height of a node
+    private int height(Node node) {
+        return (node == null) ? 0 : node.height;
+    }
+
+    // Get the balance factor of a node
+    private int getBalanceFactor(Node node) {
+        return (node == null) ? 0 : height(node.left) - height(node.right);
+    }
+
+    // Right Rotate (LL Rotation)
+    private Node rightRotate(Node y) {
+        Node x = y.left;
+        Node T2 = x.right;
+
+        x.right = y;
+        y.left = T2;
+
+        y.height = Math.max(height(y.left), height(y.right)) + 1;
+        x.height = Math.max(height(x.left), height(x.right)) + 1;
+
+        return x;
+    }
+
+    // Left Rotate (RR Rotation)
+    private Node leftRotate(Node x) {
+        Node y = x.right;
+        Node T2 = y.left;
+
+        y.left = x;
+        x.right = T2;
+
+        x.height = Math.max(height(x.left), height(x.right)) + 1;
+        y.height = Math.max(height(y.left), height(y.right)) + 1;
+
+        return y;
+    }
+
+    // Insert a key while maintaining balance
+    public void insert(int key) {
+        root = insertRec(root, key);
+    }
+
+    private Node insertRec(Node node, int key) {
+        if (node == null) {
+            return new Node(key);
+        }
+
+        // Insert in left or right subtree
+        if (key < node.key) {
+            node.left = insertRec(node.left, key);
+        } else if (key > node.key) {
+            node.right = insertRec(node.right, key);
+        } else {
+            return node; // Duplicate keys are not allowed
+        }
+
+        // Update height
+        node.height = 1 + Math.max(height(node.left), height(node.right));
+
+        // Check balance factor and perform rotations if needed
+        int balance = getBalanceFactor(node);
+
+        // Left Heavy (Right Rotation - LL Rotation)
+        if (balance > 1 && key < node.left.key) {
+            return rightRotate(node);
+        }
+
+        // Right Heavy (Left Rotation - RR Rotation)
+        if (balance < -1 && key > node.right.key) {
+            return leftRotate(node);
+        }
+
+        // Left Right Case (LR Rotation)
+        if (balance > 1 && key > node.left.key) {
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
+        }
+
+        // Right Left Case (RL Rotation)
+        if (balance < -1 && key < node.right.key) {
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
+        }
+
+        return node;
+    }
+
+    // Inorder Traversal (Left -> Root -> Right)
+    public void inorder() {
+        inorderRec(root);
+        System.out.println();
+    }
+
+    private void inorderRec(Node node) {
+        if (node != null) {
+            inorderRec(node.left);
+            System.out.print(node.key + " ");
+            inorderRec(node.right);
+        }
+    }
+
+    // Main method to test AVL Tree operations
+    public static void main(String[] args) {
+        AVLTree tree = new AVLTree();
+
+        // Insert nodes to keep tree balanced
+        tree.insert(30);
+        tree.insert(20);
+        tree.insert(40);
+        tree.insert(10);
+        tree.insert(25);
+        tree.insert(35);
+        tree.insert(50);
+
+        System.out.println("Inorder Traversal of Balanced Tree:");
+        tree.inorder(); // Output: 10 20 25 30 35 40 50
+    }
+}
+
+
+// Class representing a Node in the Unbalanced Binary Tree
+class Node {
+    int key;
+    Node left, right;
+
+    public Node(int key) {
+        this.key = key;
+        left = right = null;
+    }
+}
+
+// Class representing an Unbalanced Binary Tree
+class UnbalancedTree {
+    Node root;
+
+    // Constructor
+    public UnbalancedTree() {
+        root = null;
+    }
+
+    // Insert a new key (Standard BST insertion, which may become unbalanced)
+    public void insert(int key) {
+        root = insertRec(root, key);
+    }
+
+    private Node insertRec(Node root, int key) {
+        if (root == null) {
+            return new Node(key);
+        }
+        if (key < root.key) {
+            root.left = insertRec(root.left, key); // Insert in left subtree
+        } else {
+            root.right = insertRec(root.right, key); // Insert in right subtree
+        }
+        return root; // No balancing operation, so tree can become unbalanced
+    }
+
+    // Inorder Traversal (Left -> Root -> Right)
+    public void inorder() {
+        inorderRec(root);
+        System.out.println();
+    }
+
+    private void inorderRec(Node root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.key + " ");
+            inorderRec(root.right);
+        }
+    }
+
+    // Preorder Traversal (Root -> Left -> Right)
+    public void preorder() {
+        preorderRec(root);
+        System.out.println();
+    }
+
+    private void preorderRec(Node root) {
+        if (root != null) {
+            System.out.print(root.key + " ");
+            preorderRec(root.left);
+            preorderRec(root.right);
+        }
+    }
+
+    // Postorder Traversal (Left -> Right -> Root)
+    public void postorder() {
+        postorderRec(root);
+        System.out.println();
+    }
+
+    private void postorderRec(Node root) {
+        if (root != null) {
+            postorderRec(root.left);
+            postorderRec(root.right);
+            System.out.print(root.key + " ");
+        }
+    }
+
+    // Main method to test Unbalanced Tree operations
+    public static void main(String[] args) {
+        UnbalancedTree tree = new UnbalancedTree();
+
+        // Insert nodes in increasing order (creates a skewed tree)
+        tree.insert(10);
+        tree.insert(20);
+        tree.insert(30);
+        tree.insert(40);
+        tree.insert(50);
+        tree.insert(60);
+        tree.insert(70);
+
+        System.out.println("Inorder Traversal (Sorted Order):");
+        tree.inorder(); // Output: 10 20 30 40 50 60 70
+
+        System.out.println("Preorder Traversal:");
+        tree.preorder(); // Output: 10 20 30 40 50 60 70 (Skewed structure)
+
+        System.out.println("Postorder Traversal:");
+        tree.postorder(); // Output: 70 60 50 40 30 20 10 (Leaf to root)
+    }
+}
+
+
+
+
+/// Algorithms
+
+//Graphs Algo
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+// Class representing a Node in the tree
+class Node {
+    int key;
+    Node left, right;
+
+    public Node(int key) {
+        this.key = key;
+        left = right = null;
+    }
+}
+
+// Class representing a Binary Tree with BFS Traversal
+class BinaryTreeBFS {
+    Node root;
+
+    // Constructor
+    public BinaryTreeBFS() {
+        root = null;
+    }
+
+    // BFS Traversal (Level Order Traversal)
+    public void bfsTraversal() {
+        if (root == null) return;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node temp = queue.poll();
+            System.out.print(temp.key + " ");
+
+            if (temp.left != null) queue.add(temp.left);
+            if (temp.right != null) queue.add(temp.right);
+        }
+        System.out.println();
+    }
+
+    // Main method to test BFS
+    public static void main(String[] args) {
+        BinaryTreeBFS tree = new BinaryTreeBFS();
+
+        tree.root = new Node(1);
+        tree.root.left = new Node(2);
+        tree.root.right = new Node(3);
+        tree.root.left.left = new Node(4);
+        tree.root.left.right = new Node(5);
+        tree.root.right.left = new Node(6);
+        tree.root.right.right = new Node(7);
+
+        System.out.println("BFS Traversal (Level Order Traversal):");
+        tree.bfsTraversal(); // Output: 1 2 3 4 5 6 7
+    }
+}
+
+
+// Class representing a Node in the tree
+class Node {
+    int key;
+    Node left, right;
+
+    public Node(int key) {
+        this.key = key;
+        left = right = null;
+    }
+}
+
+
+
+
+
+// Class representing a Binary Tree with DFS Traversal
+class BinaryTreeDFS {
+    Node root;
+
+    // Constructor
+    public BinaryTreeDFS() {
+        root = null;
+    }
+
+    // DFS Preorder Traversal (Root -> Left -> Right)
+    public void dfsPreorder() {
+        preorderRec(root);
+        System.out.println();
+    }
+
+    private void preorderRec(Node node) {
+        if (node != null) {
+            System.out.print(node.key + " ");
+            preorderRec(node.left);
+            preorderRec(node.right);
+        }
+    }
+
+    // DFS Inorder Traversal (Left -> Root -> Right)
+    public void dfsInorder() {
+        inorderRec(root);
+        System.out.println();
+    }
+
+    private void inorderRec(Node node) {
+        if (node != null) {
+            inorderRec(node.left);
+            System.out.print(node.key + " ");
+            inorderRec(node.right);
+        }
+    }
+
+    // DFS Postorder Traversal (Left -> Right -> Root)
+    public void dfsPostorder() {
+        postorderRec(root);
+        System.out.println();
+    }
+
+    private void postorderRec(Node node) {
+        if (node != null) {
+            postorderRec(node.left);
+            postorderRec(node.right);
+            System.out.print(node.key + " ");
+        }
+    }
+
+    // Main method to test DFS
+    public static void main(String[] args) {
+        BinaryTreeDFS tree = new BinaryTreeDFS();
+
+        tree.root = new Node(1);
+        tree.root.left = new Node(2);
+        tree.root.right = new Node(3);
+        tree.root.left.left = new Node(4);
+        tree.root.left.right = new Node(5);
+        tree.root.right.left = new Node(6);
+        tree.root.right.right = new Node(7);
+
+        System.out.println("DFS Preorder Traversal:");
+        tree.dfsPreorder(); // Output: 1 2 4 5 3 6 7
+
+        System.out.println("DFS Inorder Traversal:");
+        tree.dfsInorder(); // Output: 4 2 5 1 6 3 7
+
+        System.out.println("DFS Postorder Traversal:");
+        tree.dfsPostorder(); // Output: 4 5 2 6 7 3 1
+    }
+}
+
+import java.util.*;
+
+class GraphDFSIterative {
+    private int V; // Number of vertices
+    private LinkedList<Integer>[] adjList; // Adjacency List
+
+    // Constructor
+    public GraphDFSIterative(int v) {
+        V = v;
+        adjList = new LinkedList[v];
+        for (int i = 0; i < v; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+    }
+
+    // Add an edge to the graph
+    public void addEdge(int v, int w) {
+        adjList[v].add(w);
+        adjList[w].add(v); // For an undirected graph
+    }
+
+    // DFS Iterative Traversal using Stack
+    public void dfsIterative(int start) {
+        boolean[] visited = new boolean[V];
+        Stack<Integer> stack = new Stack<>();
+
+        stack.push(start);
+
+        while (!stack.isEmpty()) {
+            int node = stack.pop();
+
+            if (!visited[node]) {
+                visited[node] = true;
+                System.out.print(node + " ");
+
+                // Push all adjacent nodes in reverse order (to maintain order)
+                List<Integer> neighbors = adjList[node];
+                Collections.reverse(neighbors);
+                for (int neighbor : neighbors) {
+                    if (!visited[neighbor]) {
+                        stack.push(neighbor);
+                    }
+                }
+            }
+        }
+        System.out.println();
+    }
+
+    // Main method to test DFS
+    public static void main(String[] args) {
+        GraphDFSIterative graph = new GraphDFSIterative(6);
+
+        // Creating a sample graph
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(1, 4);
+        graph.addEdge(2, 5);
+
+        System.out.println("DFS Traversal (Iterative) from node 0:");
+        graph.dfsIterative(0); // Output: 0 1 3 4 2 5
+    }
+}
+
+
+import java.util.*;
+
+class BellmanFord {
+    class Edge {
+        int src, dest, weight;
+
+        Edge(int src, int dest, int weight) {
+            this.src = src;
+            this.dest = dest;
+            this.weight = weight;
+        }
+    }
+
+    private int V, E; // Number of vertices and edges
+    private List<Edge> edges;
+
+    // Constructor
+    public BellmanFord(int vertices, int edges) {
+        this.V = vertices;
+        this.E = edges;
+        this.edges = new ArrayList<>();
+    }
+
+    // Add edge to the graph
+    public void addEdge(int src, int dest, int weight) {
+        edges.add(new Edge(src, dest, weight));
+    }
+
+    // Bellman-Ford Algorithm to find shortest paths
+    public void shortestPath(int src) {
+        int[] distance = new int[V];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[src] = 0;
+
+        // Step 1: Relax all edges |V| - 1 times
+        for (int i = 0; i < V - 1; i++) {
+            for (Edge edge : edges) {
+                if (distance[edge.src] != Integer.MAX_VALUE &&
+                        distance[edge.src] + edge.weight < distance[edge.dest]) {
+                    distance[edge.dest] = distance[edge.src] + edge.weight;
+                }
+            }
+        }
+
+        // Step 2: Check for negative weight cycles
+        for (Edge edge : edges) {
+            if (distance[edge.src] != Integer.MAX_VALUE &&
+                    distance[edge.src] + edge.weight < distance[edge.dest]) {
+                System.out.println("Graph contains a negative weight cycle!");
+                return;
+            }
+        }
+
+        // Print shortest distances
+        printSolution(distance);
+    }
+
+    // Print the shortest distance from source to each vertex
+    private void printSolution(int[] distance) {
+        System.out.println("Vertex\tDistance from Source");
+        for (int i = 0; i < V; i++) {
+            System.out.println(i + "\t" + (distance[i] == Integer.MAX_VALUE ? "INF" : distance[i]));
+        }
+    }
+
+    // Main method to test the algorithm
+    public static void main(String[] args) {
+        int V = 5; // Number of vertices
+        int E = 8; // Number of edges
+
+        BellmanFord graph = new BellmanFord(V, E);
+
+        // Define edges: (src, dest, weight)
+        graph.addEdge(0, 1, -1);
+        graph.addEdge(0, 2, 4);
+        graph.addEdge(1, 2, 3);
+        graph.addEdge(1, 3, 2);
+        graph.addEdge(1, 4, 2);
+        graph.addEdge(3, 2, 5);
+        graph.addEdge(3, 1, 1);
+        graph.addEdge(4, 3, -3);
+
+        System.out.println("Bellman-Ford Algorithm Shortest Path Calculation:");
+        graph.shortestPath(0); // Source vertex = 0
+    }
+}
+
+//Input
+            0 → 1 (-1)    0 → 2 (4)
+            1 → 2 (3)     1 → 3 (2)     1 → 4 (2)
+            3 → 2 (5)     3 → 1 (1)     4 → 3 (-3)
+
+//Output
+        Vertex  Distance from Source
+        0       0
+        1       -1
+        2       2
+        3       -2
+        4       1
+
+
+
+
+                import java.util.*;
+
+class Dijkstra {
+    static class Node implements Comparable<Node> {
+        int vertex, weight;
+        Node(int v, int w) {
+            vertex = v;
+            weight = w;
+        }
+        public int compareTo(Node other) {
+            return Integer.compare(this.weight, other.weight);
+        }
+    }
+
+    private int V;
+    private LinkedList<Node>[] adjList;
+
+    // Constructor to initialize the graph
+    public Dijkstra(int vertices) {
+        this.V = vertices;
+        adjList = new LinkedList[V];
+        for (int i = 0; i < V; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+    }
+
+    // Add an edge to the graph (Directed or Undirected)
+    public void addEdge(int src, int dest, int weight) {
+        adjList[src].add(new Node(dest, weight));
+        adjList[dest].add(new Node(src, weight)); // For undirected graph
+    }
+
+    // Dijkstra’s Algorithm to find shortest paths
+    public void shortestPath(int src) {
+        int[] distance = new int[V];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[src] = 0;
+
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        pq.add(new Node(src, 0));
+
+        while (!pq.isEmpty()) {
+            Node current = pq.poll();
+            int u = current.vertex;
+
+            for (Node neighbor : adjList[u]) {
+                int v = neighbor.vertex;
+                int weight = neighbor.weight;
+
+                if (distance[u] + weight < distance[v]) {
+                    distance[v] = distance[u] + weight;
+                    pq.add(new Node(v, distance[v]));
+                }
+            }
+        }
+
+        printSolution(distance);
+    }
+
+    // Print shortest distances from source
+    private void printSolution(int[] distance) {
+        System.out.println("Vertex\tShortest Distance from Source");
+        for (int i = 0; i < V; i++) {
+            System.out.println(i + "\t" + (distance[i] == Integer.MAX_VALUE ? "INF" : distance[i]));
+        }
+    }
+
+    // Main method to test Dijkstra's Algorithm
+    public static void main(String[] args) {
+        Dijkstra graph = new Dijkstra(6);
+
+        // Define edges: (src, dest, weight)
+        graph.addEdge(0, 1, 4);
+        graph.addEdge(0, 2, 4);
+        graph.addEdge(1, 2, 2);
+        graph.addEdge(1, 3, 5);
+        graph.addEdge(2, 3, 8);
+        graph.addEdge(2, 4, 9);
+        graph.addEdge(3, 5, 4);
+        graph.addEdge(4, 5, 6);
+
+        System.out.println("Dijkstra’s Shortest Path from Source Vertex 0:");
+        graph.shortestPath(0);
+    }
+}
+
+//Input
+                  4
+              (0)---(1)---(3)
+              |     | \    |
+              |     |  \   |
+              4     2   9  4
+              |     |     |
+              (2)---(4)---(5)
+              8      6
+
+
+//Output
+       Vertex   Shortest Distance from Source
+        0        0
+        1        4
+        2        4
+        3        9
+        4        13
+        5        13
+
+
+
+//Tree Algo
+Preorder Traversal (Root → Left → Right)
+Inorder Traversal (Left → Root → Right)
+Postorder Traversal (Left → Right → Root)
+
+// Class representing a Node in the Binary Tree
+class Node {
+    int key;
+    Node left, right;
+
+    public Node(int key) {
+        this.key = key;
+        left = right = null;
+    }
+}
+
+// Class representing a Binary Tree with DFS Traversals
+class BinaryTreeTraversal {
+    Node root;
+
+    // Constructor
+    public BinaryTreeTraversal() {
+        root = null;
+    }
+
+    // Preorder Traversal (Root → Left → Right)
+    public void preorder() {
+        preorderRec(root);
+        System.out.println();
+    }
+
+    private void preorderRec(Node node) {
+        if (node != null) {
+            System.out.print(node.key + " "); // Visit root
+            preorderRec(node.left);          // Visit left subtree
+            preorderRec(node.right);         // Visit right subtree
+        }
+    }
+
+    // Inorder Traversal (Left → Root → Right)
+    public void inorder() {
+        inorderRec(root);
+        System.out.println();
+    }
+
+    private void inorderRec(Node node) {
+        if (node != null) {
+            inorderRec(node.left);          // Visit left subtree
+            System.out.print(node.key + " "); // Visit root
+            inorderRec(node.right);         // Visit right subtree
+        }
+    }
+
+    // Postorder Traversal (Left → Right → Root)
+    public void postorder() {
+        postorderRec(root);
+        System.out.println();
+    }
+
+    private void postorderRec(Node node) {
+        if (node != null) {
+            postorderRec(node.left);        // Visit left subtree
+            postorderRec(node.right);       // Visit right subtree
+            System.out.print(node.key + " "); // Visit root
+        }
+    }
+
+    // Main method to test Tree Traversals
+    public static void main(String[] args) {
+        BinaryTreeTraversal tree = new BinaryTreeTraversal();
+
+        tree.root = new Node(1);
+        tree.root.left = new Node(2);
+        tree.root.right = new Node(3);
+        tree.root.left.left = new Node(4);
+        tree.root.left.right = new Node(5);
+        tree.root.right.left = new Node(6);
+        tree.root.right.right = new Node(7);
+
+        System.out.println("Preorder Traversal:");
+        tree.preorder();  // Output: 1 2 4 5 3 6 7
+
+        System.out.println("Inorder Traversal:");
+        tree.inorder();   // Output: 4 2 5 1 6 3 7
+
+        System.out.println("Postorder Traversal:");
+        tree.postorder(); // Output: 4 5 2 6 7 3 1
+    }
+}
+
+//Example
+                     1
+                   /   \
+                  2     3
+                 / \   / \
+                 4  5 6   7
+
+Output Explanation:
+Preorder (Root → Left → Right): 1 2 4 5 3 6 7
+Inorder (Left → Root → Right): 4 2 5 1 6 3 7
+Postorder (Left → Right → Root): 4 5 2 6 7 3 1
+
+
+
+//Recursion
+
+//Regular Recursive Factorial (Not Tail Recursive)
+class Factorial {
+    public static int factorial(int n) {
+        if (n == 0) return 1;
+        return n * factorial(n - 1); // Recursive call is not the last operation
+    }
+
+    public static void main(String[] args) {
+        System.out.println(factorial(5)); // Output: 120
+    }
+}
+
+//Tail Recursive Factorial (Optimized)
+class TailRecursionFactorial {
+    public static int factorialTail(int n, int result) {
+        if (n == 0) return result; // Base case
+        return factorialTail(n - 1, n * result); // Tail recursive call
+    }
+
+    public static int factorial(int n) {
+        return factorialTail(n, 1); // Helper function to pass accumulator
+    }
+
+    public static void main(String[] args) {
+        System.out.println(factorial(5)); // Output: 120
+    }
+}
+
+
+class TailRecursionFibonacci {
+    public static int fibonacciTail(int n, int a, int b) {
+        if (n == 0) return a;
+        if (n == 1) return b;
+        return fibonacciTail(n - 1, b, a + b); // Tail recursive call
+    }
+
+    public static int fibonacci(int n) {
+        return fibonacciTail(n, 0, 1); // Initial values for F(0) = 0, F(1) = 1
+    }
+
+    public static void main(String[] args) {
+        System.out.println(fibonacci(6)); // Output: 8
+    }
+}
+
+
+//Tail Recursive Inorder Traversal (Binary Tree)
+import java.util.Stack;
+
+class Node {
+    int key;
+    Node left, right;
+
+    public Node(int key) {
+        this.key = key;
+        left = right = null;
+    }
+}
+
+class TailRecursionInorder {
+    public static void inorder(Node root) {
+        if (root == null) return;
+
+        Stack<Node> stack = new Stack<>();
+        Node current = root;
+
+        while (current != null || !stack.isEmpty()) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left; // Move left (Simulating tail recursion)
+            }
+            current = stack.pop();
+            System.out.print(current.key + " "); // Print node
+            current = current.right; // Move right
+        }
+    }
+
+    public static void main(String[] args) {
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+
+        System.out.println("Inorder Traversal:");
+        inorder(root); // Output: 4 2 5 1 3
+    }
+}
+
+
+//Searching
+
+//Linear Search Implementation (Unsorted or Sorted Arrays)
+class LinearSearch {
+    public static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) {
+                return i; // Return index if found
+            }
+        }
+        return -1; // Return -1 if not found
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 50};
+        int target = 30;
+
+        int result = linearSearch(arr, target);
+        if (result != -1)
+            System.out.println("Element found at index: " + result);
+        else
+            System.out.println("Element not found");
+    }
+}
+
+//Binary Search Implementation (Only for Sorted Arrays)
+
+class BinarySearch {
+    public static int binarySearch(int[] arr, int target) {
+        int low = 0, high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (arr[mid] == target)
+                return mid; // Found the element
+            else if (arr[mid] < target)
+                low = mid + 1; // Search right half
+            else
+                high = mid - 1; // Search left half
+        }
+        return -1; // Element not found
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 50}; // Must be sorted
+        int target = 30;
+
+        int result = binarySearch(arr, target);
+        if (result != -1)
+            System.out.println("Element found at index: " + result);
+        else
+            System.out.println("Element not found");
+    }
+}
+
+
+//Recursive Binary Search
+
+class RecursiveBinarySearch {
+    public static int binarySearchRecursive(int[] arr, int low, int high, int target) {
+        if (low > high)
+            return -1; // Element not found
+
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == target)
+            return mid;
+        else if (arr[mid] < target)
+            return binarySearchRecursive(arr, mid + 1, high, target); // Search right
+        else
+            return binarySearchRecursive(arr, low, mid - 1, target); // Search left
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 50}; // Must be sorted
+        int target = 30;
+
+        int result = binarySearchRecursive(arr, 0, arr.length - 1, target);
+        if (result != -1)
+            System.out.println("Element found at index: " + result);
+        else
+            System.out.println("Element not found");
+    }
+}
+
+//Sorting
+
+class BubbleSort {
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            boolean swapped = false;
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (!swapped) break; // Stop if already sorted
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {64, 25, 12, 22, 11};
+        bubbleSort(arr);
+        System.out.println("Bubble Sorted Array: " + java.util.Arrays.toString(arr));
+    }
+}
+
+
+class SelectionSort {
+    public static void selectionSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            int temp = arr[minIndex];
+            arr[minIndex] = arr[i];
+            arr[i] = temp;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {64, 25, 12, 22, 11};
+        selectionSort(arr);
+        System.out.println("Selection Sorted Array: " + java.util.Arrays.toString(arr));
+    }
+}
+
+
+class InsertionSort {
+    public static void insertionSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 1; i < n; i++) {
+            int key = arr[i];
+            int j = i - 1;
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = key;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {64, 25, 12, 22, 11};
+        insertionSort(arr);
+        System.out.println("Insertion Sorted Array: " + java.util.Arrays.toString(arr));
+    }
+}
+
+
+//Heap Sort (Using Max Heap)
+
+class HeapSort {
+    public static void heapSort(int[] arr) {
+        int n = arr.length;
+
+        // Build max heap
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(arr, n, i);
+        }
+
+        // Extract elements from heap
+        for (int i = n - 1; i > 0; i--) {
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            heapify(arr, i, 0);
+        }
+    }
+
+    private static void heapify(int[] arr, int n, int i) {
+        int largest = i, left = 2 * i + 1, right = 2 * i + 2;
+
+        if (left < n && arr[left] > arr[largest]) largest = left;
+        if (right < n && arr[right] > arr[largest]) largest = right;
+
+        if (largest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+            heapify(arr, n, largest);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {64, 25, 12, 22, 11};
+        heapSort(arr);
+        System.out.println("Heap Sorted Array: " + java.util.Arrays.toString(arr));
+    }
+}
+
+//Quick sort
+
+class QuickSort {
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high);
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    private static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high], i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {64, 25, 12, 22, 11};
+        quickSort(arr, 0, arr.length - 1);
+        System.out.println("Quick Sorted Array: " + java.util.Arrays.toString(arr));
+    }
+}
+
+
+//Merge Sort
+
+class MergeSort {
+    public static void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
+        }
+    }
+
+    private static void merge(int[] arr, int left, int mid, int right) {
+        int n1 = mid - left + 1, n2 = right - mid;
+        int[] leftArr = new int[n1], rightArr = new int[n2];
+
+        System.arraycopy(arr, left, leftArr, 0, n1);
+        System.arraycopy(arr, mid + 1, rightArr, 0, n2);
+
+        int i = 0, j = 0, k = left;
+        while (i < n1 && j < n2) arr[k++] = (leftArr[i] <= rightArr[j]) ? leftArr[i++] : rightArr[j++];
+        while (i < n1) arr[k++] = leftArr[i++];
+        while (j < n2) arr[k++] = rightArr[j++];
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {64, 25, 12, 22, 11};
+        mergeSort(arr, 0, arr.length - 1);
+        System.out.println("Merge Sorted Array: " + java.util.Arrays.toString(arr));
+    }
+}
+
+
+//Greedy Algos
+//A Greedy Algorithm makes locally optimal choices at each step to achieve a globally optimal solution
+
+import java.util.*;
+
+class PrimAlgorithm {
+    private static final int INF = Integer.MAX_VALUE;
+
+    public static void primMST(int[][] graph) {
+        int V = graph.length;
+        int[] key = new int[V];
+        boolean[] inMST = new boolean[V];
+        int[] parent = new int[V];
+
+        Arrays.fill(key, INF);
+        key[0] = 0;
+        parent[0] = -1;
+
+        for (int count = 0; count < V - 1; count++) {
+            int u = findMinKeyVertex(key, inMST, V);
+            inMST[u] = true;
+
+            for (int v = 0; v < V; v++) {
+                if (graph[u][v] != 0 && !inMST[v] && graph[u][v] < key[v]) {
+                    parent[v] = u;
+                    key[v] = graph[u][v];
+                }
+            }
+        }
+
+        printMST(parent, graph);
+    }
+
+    private static int findMinKeyVertex(int[] key, boolean[] inMST, int V) {
+        int min = INF, minIndex = -1;
+
+        for (int v = 0; v < V; v++) {
+            if (!inMST[v] && key[v] < min) {
+                min = key[v];
+                minIndex = v;
+            }
+        }
+        return minIndex;
+    }
+
+    private static void printMST(int[] parent, int[][] graph) {
+        System.out.println("Edge \tWeight");
+        for (int i = 1; i < graph.length; i++) {
+            System.out.println(parent[i] + " - " + i + "\t" + graph[i][parent[i]]);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[][] graph = {
+                { 0, 2, 0, 6, 0 },
+                { 2, 0, 3, 8, 5 },
+                { 0, 3, 0, 0, 7 },
+                { 6, 8, 0, 0, 9 },
+                { 0, 5, 7, 9, 0 }
+        };
+
+        System.out.println("Prim’s MST (Adjacency Matrix):");
+        primMST(graph);
+    }
+}
+
+       Edge 	Weight
+        0 - 1	2
+        1 - 2	3
+        1 - 4	5
+        0 - 3	6
+
+//Optimized Prim’s Algorithm (Using Min-Heap / Priority Queue) – O(E log V)
+
+                import java.util.*;
+
+class PrimOptimized {
+    static class Edge implements Comparable<Edge> {
+        int vertex, weight;
+
+        Edge(int v, int w) {
+            vertex = v;
+            weight = w;
+        }
+
+        public int compareTo(Edge other) {
+            return Integer.compare(this.weight, other.weight);
+        }
+    }
+
+    public static void primMST(int V, List<List<Edge>> graph) {
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
+        boolean[] inMST = new boolean[V];
+        int[] parent = new int[V];
+        int[] key = new int[V];
+        Arrays.fill(key, Integer.MAX_VALUE);
+        key[0] = 0;
+        parent[0] = -1;
+        pq.add(new Edge(0, 0));
+
+        while (!pq.isEmpty()) {
+            int u = pq.poll().vertex;
+            inMST[u] = true;
+
+            for (Edge neighbor : graph.get(u)) {
+                int v = neighbor.vertex, weight = neighbor.weight;
+                if (!inMST[v] && weight < key[v]) {
+                    key[v] = weight;
+                    parent[v] = u;
+                    pq.add(new Edge(v, key[v]));
+                }
+            }
+        }
+
+        printMST(parent, key);
+    }
+
+    private static void printMST(int[] parent, int[] key) {
+        System.out.println("Edge \tWeight");
+        for (int i = 1; i < key.length; i++) {
+            System.out.println(parent[i] + " - " + i + "\t" + key[i]);
+        }
+    }
+
+    public static void main(String[] args) {
+        int V = 5;
+        List<List<Edge>> graph = new ArrayList<>();
+        for (int i = 0; i < V; i++) graph.add(new ArrayList<>());
+
+        graph.get(0).add(new Edge(1, 2));
+        graph.get(0).add(new Edge(3, 6));
+        graph.get(1).add(new Edge(0, 2));
+        graph.get(1).add(new Edge(2, 3));
+        graph.get(1).add(new Edge(3, 8));
+        graph.get(1).add(new Edge(4, 5));
+        graph.get(2).add(new Edge(1, 3));
+        graph.get(2).add(new Edge(4, 7));
+        graph.get(3).add(new Edge(0, 6));
+        graph.get(3).add(new Edge(1, 8));
+        graph.get(3).add(new Edge(4, 9));
+        graph.get(4).add(new Edge(1, 5));
+        graph.get(4).add(new Edge(2, 7));
+        graph.get(4).add(new Edge(3, 9));
+
+        System.out.println("Prim’s MST (Min-Heap):");
+        primMST(V, graph);
+    }
+}
+
+
+//Back Tracking Algo
+
+//1. N-Queens Problem (Backtracking)
+class NQueens {
+    private static void solveNQueens(int n) {
+        int[][] board = new int[n][n];
+        if (placeQueens(board, 0, n)) {
+            printBoard(board);
+        } else {
+            System.out.println("No solution exists.");
+        }
+    }
+
+    private static boolean placeQueens(int[][] board, int row, int n) {
+        if (row == n) return true; // All queens placed
+
+        for (int col = 0; col < n; col++) {
+            if (isSafe(board, row, col, n)) {
+                board[row][col] = 1; // Place Queen
+                if (placeQueens(board, row + 1, n)) return true;
+                board[row][col] = 0; // Backtrack
+            }
+        }
+        return false;
+    }
+
+    private static boolean isSafe(int[][] board, int row, int col, int n) {
+        for (int i = 0; i < row; i++) if (board[i][col] == 1) return false;
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) if (board[i][j] == 1) return false;
+        for (int i = row, j = col; i >= 0 && j < n; i--, j++) if (board[i][j] == 1) return false;
+        return true;
+    }
+
+    private static void printBoard(int[][] board) {
+        for (int[] row : board) {
+            for (int cell : row) System.out.print((cell == 1 ? "Q " : ". "));
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        int n = 8; // Change to 4, 5, etc. for different board sizes
+        solveNQueens(n);
+    }
+}
+
+//Example Output for N = 4
+        . Q . .
+        . . . Q
+        Q . . .
+        . . Q .
+
+
+
+//2.Sudoku Solver (Backtracking)
+
+class SudokuSolver {
+    private static final int N = 9;
+
+    public static boolean solveSudoku(int[][] board) {
+        for (int row = 0; row < N; row++) {
+            for (int col = 0; col < N; col++) {
+                if (board[row][col] == 0) { // Empty cell
+                    for (int num = 1; num <= 9; num++) {
+                        if (isSafe(board, row, col, num)) {
+                            board[row][col] = num;
+                            if (solveSudoku(board)) return true;
+                            board[row][col] = 0; // Backtrack
+                        }
+                    }
+                    return false; // No valid number
+                }
+            }
+        }
+        return true; // Solved
+    }
+
+    private static boolean isSafe(int[][] board, int row, int col, int num) {
+        for (int i = 0; i < N; i++) {
+            if (board[row][i] == num || board[i][col] == num) return false;
+        }
+        int boxRow = row - row % 3, boxCol = col - col % 3;
+        for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++)
+            if (board[boxRow + i][boxCol + j] == num) return false;
+        return true;
+    }
+
+    private static void printBoard(int[][] board) {
+        for (int[] row : board) {
+            for (int num : row) System.out.print(num + " ");
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        int[][] board = {
+                {5, 3, 0, 0, 7, 0, 0, 0, 0},
+                {6, 0, 0, 1, 9, 5, 0, 0, 0},
+                {0, 9, 8, 0, 0, 0, 0, 6, 0},
+                {8, 0, 0, 0, 6, 0, 0, 0, 3},
+                {4, 0, 0, 8, 0, 3, 0, 0, 1},
+                {7, 0, 0, 0, 2, 0, 0, 0, 6},
+                {0, 6, 0, 0, 0, 0, 2, 8, 0},
+                {0, 0, 0, 4, 1, 9, 0, 0, 5},
+                {0, 0, 0, 0, 8, 0, 0, 7, 9}
+        };
+
+        if (solveSudoku(board)) {
+            System.out.println("Solved Sudoku:");
+            printBoard(board);
+        } else {
+            System.out.println("No solution exists.");
+        }
+    }
+}
+
+//Output
+        Solved Sudoku:
+        5 3 4 6 7 8 9 1 2
+        6 7 2 1 9 5 3 4 8
+        1 9 8 3 4 2 5 6 7
+        8 5 9 7 6 1 4 2 3
+        4 2 6 8 5 3 7 9 1
+        7 1 3 9 2 4 8 5 6
+        9 6 1 5 3 7 2 8 4
+        2 8 7 4 1 9 6 3 5
+        3 4 5 2 8 6 1 7 9
+
+
+
+//Self balancing trees
+//1. Red-Black Tree (RBT) Implementation
+//Red-Black Tree Properties:
+//Every node is either red or black.
+//The root node is always black.
+//No two consecutive red nodes appear.
+//Every path from a node to its descendant NULL nodes has the same number of black nodes.
+//The tree remains approximately balanced.
+
+class RedBlackTree {
+    private static final boolean RED = true;
+    private static final boolean BLACK = false;
+
+    static class Node {
+        int key;
+        Node left, right, parent;
+        boolean color;
+
+        public Node(int key) {
+            this.key = key;
+            this.color = RED; // New nodes are red by default
+        }
+    }
+
+    private Node root;
+
+    // Rotate left
+    private void rotateLeft(Node x) {
+        Node y = x.right;
+        x.right = y.left;
+        if (y.left != null) y.left.parent = x;
+        y.parent = x.parent;
+        if (x.parent == null) root = y;
+        else if (x == x.parent.left) x.parent.left = y;
+        else x.parent.right = y;
+        y.left = x;
+        x.parent = y;
+    }
+
+    // Rotate right
+    private void rotateRight(Node x) {
+        Node y = x.left;
+        x.left = y.right;
+        if (y.right != null) y.right.parent = x;
+        y.parent = x.parent;
+        if (x.parent == null) root = y;
+        else if (x == x.parent.right) x.parent.right = y;
+        else x.parent.left = y;
+        y.right = x;
+        x.parent = y;
+    }
+
+    // Insert a key into the Red-Black Tree
+    public void insert(int key) {
+        Node node = new Node(key);
+        if (root == null) {
+            root = node;
+            root.color = BLACK; // Root must be black
+            return;
+        }
+        Node parent = null, temp = root;
+        while (temp != null) {
+            parent = temp;
+            if (key < temp.key) temp = temp.left;
+            else temp = temp.right;
+        }
+        node.parent = parent;
+        if (key < parent.key) parent.left = node;
+        else parent.right = node;
+
+        fixInsertion(node);
+    }
+
+    // Fix violations after insertion
+    private void fixInsertion(Node node) {
+        while (node.parent != null && node.parent.color == RED) {
+            Node grandparent = node.parent.parent;
+            if (node.parent == grandparent.left) {
+                Node uncle = grandparent.right;
+                if (uncle != null && uncle.color == RED) { // Case 1: Recoloring
+                    node.parent.color = BLACK;
+                    uncle.color = BLACK;
+                    grandparent.color = RED;
+                    node = grandparent;
+                } else { // Case 2 & 3: Rotation
+                    if (node == node.parent.right) {
+                        node = node.parent;
+                        rotateLeft(node);
+                    }
+                    node.parent.color = BLACK;
+                    grandparent.color = RED;
+                    rotateRight(grandparent);
+                }
+            } else {
+                Node uncle = grandparent.left;
+                if (uncle != null && uncle.color == RED) { // Case 1: Recoloring
+                    node.parent.color = BLACK;
+                    uncle.color = BLACK;
+                    grandparent.color = RED;
+                    node = grandparent;
+                } else { // Case 2 & 3: Rotation
+                    if (node == node.parent.left) {
+                        node = node.parent;
+                        rotateRight(node);
+                    }
+                    node.parent.color = BLACK;
+                    grandparent.color = RED;
+                    rotateLeft(grandparent);
+                }
+            }
+        }
+        root.color = BLACK; // Root must always be black
+    }
+
+    // Inorder Traversal (Print Tree)
+    public void inorder(Node node) {
+        if (node != null) {
+            inorder(node.left);
+            System.out.print(node.key + " (" + (node.color == RED ? "R" : "B") + ") ");
+            inorder(node.right);
+        }
+    }
+
+    public void printTree() {
+        inorder(root);
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        RedBlackTree rbt = new RedBlackTree();
+        rbt.insert(20);
+        rbt.insert(15);
+        rbt.insert(25);
+        rbt.insert(10);
+        rbt.insert(5);
+        rbt.insert(30);
+
+        System.out.println("Red-Black Tree Inorder Traversal:");
+        rbt.printTree();
+    }
+}
+
+//output : 5 (R) 10 (B) 15 (R) 20 (B) 25 (B) 30 (R)
+
+//2. AVL Tree (Self-Balancing BST)
+//AVL Tree Properties:
+//Balanced Tree – The height difference (balance factor) between the left and right subtrees is at most 1.
+//Rotations (LL, RR, LR, RL) are used to maintain balance.
+
+class AVLTree {
+    static class Node {
+        int key, height;
+        Node left, right;
+
+        public Node(int key) {
+            this.key = key;
+            this.height = 1;
+        }
+    }
+
+    private Node root;
+
+    // Get height of a node
+    private int height(Node node) {
+        return (node == null) ? 0 : node.height;
+    }
+
+    // Get balance factor
+    private int getBalance(Node node) {
+        return (node == null) ? 0 : height(node.left) - height(node.right);
+    }
+
+    // Rotate Right (LL Rotation)
+    private Node rotateRight(Node y) {
+        Node x = y.left;
+        Node T2 = x.right;
+
+        x.right = y;
+        y.left = T2;
+
+        y.height = Math.max(height(y.left), height(y.right)) + 1;
+        x.height = Math.max(height(x.left), height(x.right)) + 1;
+
+        return x;
+    }
+
+    // Rotate Left (RR Rotation)
+    private Node rotateLeft(Node x) {
+        Node y = x.right;
+        Node T2 = y.left;
+
+        y.left = x;
+        x.right = T2;
+
+        x.height = Math.max(height(x.left), height(x.right)) + 1;
+        y.height = Math.max(height(y.left), height(y.right)) + 1;
+
+        return y;
+    }
+
+    // Insert node in AVL Tree
+    public Node insert(Node node, int key) {
+        if (node == null) return new Node(key);
+
+        if (key < node.key) node.left = insert(node.left, key);
+        else if (key > node.key) node.right = insert(node.right, key);
+        else return node; // No duplicate values
+
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        int balance = getBalance(node);
+
+        if (balance > 1 && key < node.left.key) return rotateRight(node); // LL Rotation
+        if (balance < -1 && key > node.right.key) return rotateLeft(node); // RR Rotation
+        if (balance > 1 && key > node.left.key) {
+            node.left = rotateLeft(node.left);
+            return rotateRight(node); // LR Rotation
+        }
+        if (balance < -1 && key < node.right.key) {
+            node.right = rotateRight(node.right);
+            return rotateLeft(node); // RL Rotation
+        }
+
+        return node;
+    }
+
+    public void inorder(Node node) {
+        if (node != null) {
+            inorder(node.left);
+            System.out.print(node.key + " ");
+            inorder(node.right);
+        }
+    }
+
+    public static void main(String[] args) {
+        AVLTree avl = new AVLTree();
+        avl.root = avl.insert(avl.root, 30);
+        avl.root = avl.insert(avl.root, 20);
+        avl.root = avl.insert(avl.root, 40);
+        avl.root = avl.insert(avl.root, 10);
+
+        System.out.println("AVL Tree Inorder Traversal:");
+        avl.inorder(avl.root);
+    }
+}
